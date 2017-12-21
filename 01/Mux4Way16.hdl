@@ -1,0 +1,32 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux4Way16.hdl
+
+/**
+ * Esta tabla de verdad de los selectores tiene trocados la b y la c
+ * me tuvo volteando mas de dos horas!!!!
+ * 4-way 16-bit multiplexor:
+ * out = a if sel == 00
+ *       b if sel == 01 ----->Correccion : c if sel == 01
+ *       c if sel == 10 ----->Correccion : b if sel == 10
+ *       d if sel == 11
+ *
+ * Actualizacion: Me di cuente que estos manes cuentan los indices de los
+ * arreglos de derecha a izquierda, y no de izquierda a derecha
+ *
+ * Es decir que si tenemos a = [5,6,7] para ellos a[2] = 5, a[1] = 6, a[0] =7
+ *
+ *
+ */
+
+CHIP Mux4Way16 {
+    IN a[16], c[16], b[16], d[16], sel[2];
+    OUT out[16];
+
+    PARTS:
+    Mux16(a = a, b = b, sel = sel[0], out = finalista1);
+    Mux16(a = c, b = d, sel = sel[0], out = finalista2);
+    
+    Mux16(a = finalista1, b = finalista2, sel = sel[1], out = out);
+}
